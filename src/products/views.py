@@ -1,4 +1,4 @@
-from django.shortcuts import render,Http404
+from django.shortcuts import render,HttpResponse
 from django.db.models import Q
 from .models import Product , ProductImage
 
@@ -28,11 +28,11 @@ def single(request,slug):
 		context={
 			"product":product,
 			"images" : images,
-		}
-		template="products/single.html"
-		return render(request,template,context)
+		}		
 	except:
-		raise Http404
+		pass
+	template="products/single.html"
+	return render(request,template,context)
 
 
 def search(request):

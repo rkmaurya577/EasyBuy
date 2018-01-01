@@ -12,7 +12,8 @@ urlpatterns = patterns('',
     url(r'^',include("products.urls")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^cart/$',"carts.views.view_cart",name="view_cart"),
-    url(r'^cart/(?P<slug>[\w-]+)/$',"carts.views.update_cart",name="update_cart"),
+    url(r'^cart/(?P<id>\d+)/$',"carts.views.remove_from_cart",name="remove_from_cart"),
+    url(r'^cart/(?P<slug>[\w-]+)/$',"carts.views.add_to_cart",name="add_to_cart"),
 )
 
 if settings.DEBUG:
