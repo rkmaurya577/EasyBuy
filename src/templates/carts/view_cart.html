@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %} Cart {% endblock %}
+
 {% block content %}
 	<div class="row">
 	<div class="col-sm-8 col-sm-offset-2">
@@ -15,10 +17,17 @@
 			</thead>
 			{% for item in cart.cartitem_set.all %}
 			<tr>
-			<td>{{item.product}}</td>
+			<td>
+				{{item.product}}
+				<ul> {% if item.product_variations.all %}
+						{% for variation in item.product_variations.all %}
+							<li>{{variation.category|capfirst}} : {{variation.title|capfirst}}</li>
+						{% endfor %}
+				{% endif %} </ul>
+			</td>
 			<td><i class="fa fa-inr">&nbsp{{item.product.price}}</i></td>
 			<td>{{item.quantity}}</td>
-			<td><a href="{% url "update_cart" item.product.slug %}?qty=0 ">Remove</a></td>
+			<td><a href="{% url "remove_from_cart" item.id %}">Remove</a></td>
 			</tr>
 			{% endfor %}
 			<tfoot>
