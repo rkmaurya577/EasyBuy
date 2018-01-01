@@ -39,17 +39,16 @@ class ProductImage(models.Model):
 	def __unicode__(self):
 		return self.product.title
 
-# class VariationManager(models.Manager):
-# 	def all(self):
-# 		return super(VariationManager, self).filter(active=true)
+class ProductVariationManager(models.Manager):
+	def all(self):
+		return super(ProductVariationManager, self).filter(active=True)
 
-# 	def sizes(self):
-# 		print "in size"
-# 		return self.all().filter(category='size')
+	def sizes(self):
+		return self.all().filter(category='size')
 
-# 	def colors(self):
-# 		return self.all().filter(category='color')
-	
+	def colors(self):
+		return self.all().filter(category='color')
+
 
 VAR_CATEGORIES = {
 	("size","size"),
@@ -66,7 +65,7 @@ class ProductVariation(models.Model):
 	updated= models.DateTimeField(auto_now_add=False , auto_now=True)
 	active = models.BooleanField(default=True)
 
-	# objects = VariationManager()
+	objects = ProductVariationManager()
 
 	def __unicode__(self):
 		return self.title
