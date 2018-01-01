@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %} EasyBuy {% endblock %}
+
+
+    {% block content %}
+      <div class="row">
+          {% for product in products %}
+           <div class="col-sm-4">
+              <div class="thumbnail">
+                  {% if product.productimage_set.all %}
+
+                      {% for item in product.productimage_set.all %}
+                          {% if item.featured %}  
+                            <img src="{{item.image.url}}" class="img-responsive" />
+                          {% endif %}
+                      {% endfor %}
+                  {% else %}
+                      <img class="img-responsive" src='{% static "img/no_image.jpg" %}' />
+                  {% endif %}
+
+                  <div class="caption">
+                      <h3><a href="{{ product.get_absolute_url }}">{{product.title}}</a></h3>
+                      <i class="fa fa-inr">&nbsp{{product.price}}</i>
+                      <p>{{product.description|truncatewords:15}}</p>
+                      <p><a href="{{ product.get_absolute_url }}" class="btn btn-primary" role="button">View</a>
+                      <a href="#" class="btn btn-default" role="button">Buy</a></p> 
+                  </div>
+              </div>
+   
+          </div>
+
+      {%cycle "" "" "" "</div> <br/> <hr/> <div class='row'>" %}
+    {% endfor %}
+  </div>
+
+    {% endblock %}

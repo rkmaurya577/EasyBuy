@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{product.title}} | EasyBuy
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+<div class="col-sm-4">
+	{% for img in images %}
+		{% if img.featured %}
+		<div class="col-xs-12"> 
+	       <img src="{{img.image.url}}" class="img-responsive" /> 
+	       <hr/>   
+	    </div>
+	    {% endif %}
+	 {% endfor %}
+	 {% for img in images %}
+	    {% if not img.featured %}
+			<div class="col-xs-6">
+				<a href="#" class="thumbnail">
+				<img src="{{img.image.url}}" class="img-responsive">
+				</a>
+			</div>
+		{% endif %}
+	 {% endfor %}
+</div>
+
+<div class="col-sm-8">
+	<div class="row">
+		<div class="col-sm-8">
+			<h1>{{product.title}} </h1>
+		</div>
+		<div class="col-sm-4">
+			<form class="form pull-right" method="GET" action="{% url "update_cart" product.slug %}">
+				<button class="btn btn-success btn-block" type="submit"><small class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></small> Add to Cart</button>
+				<input class="form-control" name="qty" type="number" value="1"/>
+				{% if product.productvariation_set.all%}
+
+				<select class="form-control" name="size">
+						{% for item in product.productvariation_set.all %}
+						<option value="{{item.title|lower}}">{{item.title|capfirst }}</option>
+						{% endfor %}
+				</select>
+
+				<!-- {% if product.productvariation_set.sizes%}
+					<select class="form-control" name="sizes">
+						{% for item in product.product.productvariation_set.all %}
+						<option value="{{item.title|lower}}">{{item.title|capfirst }}</option>
+						{% endfor %}
+					</select>
+				{% endif %}
+				{% if product.productvariation_set.colors %}
+					<select class="form-control" name="color">
+						{% for item in product.product.productvariation_set.all %}
+						<option value="{{item.title|lower}}">{{item.title|capfirst }}</option>
+						{% endfor %}
+					</select>
+				{% endif %} -->
+
+				{% endif %}
+			</form>
+		</div>
+	</div>
+	<hr/>
+	price : <i class="fa fa-inr">&nbsp</i>{{product.price}}
+	<br/>
+	Shipping : Free over <i class="fa fa-inr" style="color:red">&nbsp500</i>+ purchase.
+	<hr/>
+	<p>{{product.description|linebreaks}}</p>
+</div>
+
+</div>
+	
+{% endblock %}

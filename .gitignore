@@ -1,0 +1,12 @@
+bin/
+easybuy.sublime-*
+lib/
+local/
+include/
+pip-selfcheck*
+*.py[cod]
+> .DS_Store
+> __pycache__/
+> *.py[cod]
+> *.class
+> 
