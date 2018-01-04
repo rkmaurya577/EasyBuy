@@ -1,11 +1,39 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
+{% load staticfiles %}
 
-	{% block content %}
-	<ul>
-		{% for item in products %}
-				<li>
-					{{item}} : {{item.price}}
-				</li>
-		{% endfor %}		
-	</ul>
-	{% endblock %}
+{% block title %} Products {% endblock %}
+
+
+    {% block content %}
+      <div class="row">
+          {% for product in products %}
+           <div class="col-sm-2">
+              <div class="thumbnail">
+                  {% if product.productimage_set.all %}
+
+                      {% for item in product.productimage_set.all %}
+                          {% if item.featured %}  
+                          <a href="{{ product.get_absolute_url }}"><div class="product_image" style ="
+                          	width: 100px;height: 100px;
+                            background-image: url('{{ item.image.url }}');
+                            "> </div></a>
+                          {% endif %}
+                      {% endfor %}
+                  {% else %}
+                      <a href="{{ product.get_absolute_url }}"><div class="product_image" style="width: 100px;height: 100px;"> </div></a>
+                  {% endif %}
+
+                  <div class="caption">
+                      <h4><a href="{{ product.get_absolute_url }}">{{product.title}}</a></h4>
+                      <i class="fa fa-inr">&nbsp{{product.price}}</i>
+                      <p>{{product.description|truncatewords:10}}</p>
+                      <p><a href="{{ product.get_absolute_url }}" class="btn btn-primary" role="button">View</a>
+                      <a href="#" class="btn btn-default" role="button">Buy</a></p> 
+                  </div>
+              </div>
+   
+          </div>
+    {% endfor %}
+  </div>
+
+    {% endblock %}

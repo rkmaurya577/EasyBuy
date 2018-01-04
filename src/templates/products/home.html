@@ -13,11 +13,15 @@
 
                       {% for item in product.productimage_set.all %}
                           {% if item.featured %}  
-                            <img src="{{item.image.url}}" class="img-responsive" />
+                          <a href="{{ product.get_absolute_url }}"><div class="product_image" style ="
+                            background-image: url('{{ item.image.url }}');
+                            "> </div></a>
+                            <!-- <img src="{{item.image.url}}" class="img-responsive" /> -->
                           {% endif %}
                       {% endfor %}
                   {% else %}
-                      <img class="img-responsive" src='{% static "img/no_image.jpg" %}' />
+                      <a href="{{ product.get_absolute_url }}"><div class="product_image"> </div></a>
+                     <!--  <img class="img-responsive" src='{% static "img/no_image.jpg" %}' /> -->
                   {% endif %}
 
                   <div class="caption">
@@ -31,7 +35,7 @@
    
           </div>
 
-      {%cycle "" "" "" "</div> <br/> <hr/> <div class='row'>" %}
+      <!-- {%cycle "" "" "" "</div> <br/> <hr/> <div class='row'>" %} -->
     {% endfor %}
   </div>
 
