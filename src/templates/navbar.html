@@ -18,7 +18,7 @@
           </ul>
             <form class="navbar-form navbar-left" method="GET" action="products/search/">
             <div class="form-group">
-            <input type="text" class="form-control" name="q" placeholder="Search">
+            <input type="text" class="form-control" name="q" placeholder="Search Products">
             </div>
             <button type="submit" class="btn btn-default" >Search</button>
             </form>
@@ -27,6 +27,9 @@
             <li><a href="{% url 'view_cart' %}">Cart&nbsp<small class="badge">{% if not request.session.total_items %} 0 {% else %} {{request.session.total_items}} {% endif %}</small></a></li>
             {% if user.is_authenticated %}
             <li class="active"><a href="#">Account</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+              <li><a href="{% url 'login' %}">Login</a>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
