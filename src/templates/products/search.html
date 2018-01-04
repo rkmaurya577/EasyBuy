@@ -1,7 +1,45 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %} Results {% endblock %}
+
 
 {% block content %}
-<h1>search query is {{query}}</h1>
+<table class="table">
+	<thead>
+	<th></th>
+	<th></th>
+	<th>Products</th>	
+	</thead>
+	<tbody>
+		{% for product in products %}
+		<tr>
+			<td style="width: 160px; height: 160px">
+			  {% if product.productimage_set.all %}
+				{% for item in product.productimage_set.all %}
+					{% if item.featured %}
+							<div class="product_image" style ="
+                            width:100px;
+                            height:100px;
+                            background-image: url('{{item.image.url}}');
+                            "> </div>
+                         
+					{% endif %}
+				{% endfor %}
+			  {% else %}
+						<div class="product_image" style ="
+                            width:100px;
+                            height:100px;
+                            "> </div>
+                       
+			  {% endif %}
+			</td>
+			<td></td>
+			<td><a href="{% url "single_product" product.slug %}">{{product}}</a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
 
 	
 {% endblock %}
