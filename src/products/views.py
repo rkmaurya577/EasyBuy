@@ -36,15 +36,18 @@ def single(request,slug):
 
 
 def search(request):
-	queryset_list=Product.objects.all()
-	query=request.GET.get("q")
+	try:
+		query = request.GET.get('q')
+	except:
+		query = None
 	if query:
-		queryset_list=queryset_list.filter(
+		products = Product.objects.filter(
 			Q(title__icontains=query) |
 			Q(description__icontains=query)
-			).distinct()		
-	context={
-			"query":query, 
-		}
-	template="products/search.html"
+			)
+		context = {'query' : query, 'products':products}
+		template = 'products/search.html'
+	else:
+		context = {}
+		template = 'products/home.html'
 	return render(request,template,context)
