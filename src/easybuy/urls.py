@@ -14,6 +14,10 @@ urlpatterns = patterns('',
     url(r'^cart/$',"carts.views.view_cart",name="view_cart"),
     url(r'^cart/(?P<id>\d+)/$',"carts.views.remove_from_cart",name="remove_from_cart"),
     url(r'^cart/(?P<slug>[\w-]+)/$',"carts.views.add_to_cart",name="add_to_cart"),
+    url(r'^checkout/$',"orders.views.checkout",name="checkout"),
+    url(r'^order/$',"orders.views.order",name="order"),
+    url(r'^account/logout/$',"accounts.views.logout_view",name="logout"),
+    url(r'^account/login/$',"accounts.views.login_view",name="login"),
 )
 
 if settings.DEBUG:
