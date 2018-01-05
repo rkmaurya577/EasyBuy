@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^order/$',"orders.views.order",name="order"),
     url(r'^account/logout/$',"accounts.views.logout_view",name="logout"),
     url(r'^account/login/$',"accounts.views.login_view",name="login"),
+    url(r'^account/register/$',"accounts.views.registration_view",name="registration"),
 )
 
 if settings.DEBUG:
