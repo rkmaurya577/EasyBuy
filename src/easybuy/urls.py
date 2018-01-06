@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^account/logout/$',"accounts.views.logout_view",name="logout"),
     url(r'^account/login/$',"accounts.views.login_view",name="login"),
     url(r'^account/register/$',"accounts.views.registration_view",name="registration"),
+    url(r'^account/activate/(?P<activation_key>\w+)/$',"accounts.views.activation_confirmed",name="activation_confirmed"),
 )
 
 if settings.DEBUG:
