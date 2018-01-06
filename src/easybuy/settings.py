@@ -26,6 +26,13 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DEFAULT_FROM_EMAIL = "yourid@gmail.com"
+
+EMAIL_HOST = "smtp.gmail.com"  #sendgrid  for transactional email
+EMAIL_HOST_USER = "yourid@gmail.com"
+EMAIL_HOST_PASSWORD = "password"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Application definition
 
