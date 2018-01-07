@@ -1,3 +1,4 @@
+src/easybuy/email_settings.py
 bin/
 easybuy.sublime-*
 lib/
