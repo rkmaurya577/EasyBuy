@@ -38,9 +38,7 @@ def registration_view(request):
 	if form.is_valid():
 		print "valid"
 		new_user = form.save(commit=False)
-		print "above"
 		new_user.save()
-		print "below"
 		messages.success(request,"Successfully Registered, Please confirm your email !!")
 		return HttpResponseRedirect("/")
 		# new_user.first_name = "rahul"  #here we can do other work
