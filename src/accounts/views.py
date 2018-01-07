@@ -1,13 +1,17 @@
 import re
 from django.shortcuts import render,HttpResponseRedirect,Http404
 from django.contrib.auth import login, logout, authenticate
-# Create your views here.
+from django.contrib import messages
+from django.core.urlresolvers import reverse
 from .forms import LoginForm , RegistrationForm
 from .models import UserEmailConfirmed
 
 def logout_view(request):
 	logout(request)
-	return HttpResponseRedirect("/")
+	messages.success(request,"<strong>Successfully logged out</strong> ,Feel free to <a href='%s' >login</a> again !!" %(reverse("login")),extra_tags = "safe")
+	# messages.warning(request,"There is warning.")
+	# messages.error(request,"There is Some error")
+	return HttpResponseRedirect("%s" %(reverse("login")))
 
 
 def login_view(request):
@@ -18,7 +22,8 @@ def login_view(request):
 		password=form.cleaned_data["password"]
 		user=authenticate(username=username,password=password) #variable = parameter
 		login(request,user)
-		user.useremailconfirmed.activate_user_email()
+		messages.success(request,"Successfully logged in ,Welcome Back")
+		return HttpResponseRedirect("/")
 	context={
 		"form" : form,
 		"submit_btn" : value,
@@ -33,8 +38,13 @@ def registration_view(request):
 	if form.is_valid():
 		print "valid"
 		new_user = form.save(commit=False)
-		# new_user.first_name = "rahul"  #here we can do other work
+		print "above"
 		new_user.save()
+		print "below"
+		messages.success(request,"Successfully Registered, Please confirm your email !!")
+		return HttpResponseRedirect("/")
+		# new_user.first_name = "rahul"  #here we can do other work
+		
 		# username=form.cleaned_data["username"]
 		# password=form.cleaned_data["password"]
 		# user=authenticate(username=username,password=password) #variable = parameter
@@ -50,7 +60,7 @@ def registration_view(request):
 SHA1_RE = re.compile("^[a-f0-9]{40}$")
 
 
-def activation_confirmed(request, activation_key):
+def activation_view(request, activation_key):
 	print "in activation_confirmed"
 	if SHA1_RE.search(activation_key):
 		print "real Key"
@@ -59,18 +69,19 @@ def activation_confirmed(request, activation_key):
 			print "instance exist"
 		except UserEmailConfirmed.DoesNotExist:
 			instance = None
-			print "instance not exist"
-			raise Http404
+			messages.success(request,"There was an error with your request.")
 
 		if instance is not None and not instance.confirmed:
 			print "inside if"
 			instance.confirmed=True
 			instance.activation_key="confirmed"
 			instance.save()
+			messages.success(request,"Successfully Registered, Please confirm your email. !!")
 			page_message = "Confirmation Successfull"
 		elif instance is not None and instance.confirmed:
 			print "inside elif"
 			page_message = "Already Confirmed"
+			messages.success(request,"Already Confirmed. !!")
 		else:
 			print "inside else"
 			page_message = ""
