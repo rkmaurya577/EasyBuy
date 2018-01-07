@@ -14,7 +14,13 @@
 
     {% load staticfiles %}
 
-    <style type="text/css">
+    <style >
+        /*.alert {
+            border-radius: 0px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            }*/
         {% block styles %}
         {% endblock %}
 
@@ -25,12 +31,12 @@
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            margin: 0 auto; 
+            margin: 0 auto;
         }
     </style>
     </head>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
@@ -40,13 +46,24 @@
 
     <script src="https://getbootstrap.com/docs/3.3/assets/js/ie-emulation-modes-warning.js"></script>
 
+
    
   </head>
 
   <body>
-    
+
     {% include "navbar.html" %}
-	
+
+        
+	{% if messages %}
+        {% for message in messages %}
+             <div class="container alert alert-{% if 'success' in message.tags %}success{% elif 'warning' in message.tags %}warning{% else %}danger{% endif %}  role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                <p>{% if "safe" in message.tags %} {{message|safe}} {% else %} {{message}} {% endif %}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <div class="container">
     {% block content %} 
 
@@ -56,12 +73,15 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <!-- <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
 
-    <script src="<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="https://getbootstrap.com/docs/3.3/assets/js/ie10-viewport-bug-workaround.js"></script>
     <!-- for Indian currency -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  
   </body>
 </html>
