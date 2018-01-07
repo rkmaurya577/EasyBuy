@@ -1,11 +1,10 @@
-
-<nav class="navbar navbar-default navbar-fixed-top">
-    {% if marketing_message %}
+  <nav class="navbar navbar-default">
+    <!-- {% if marketing_message %}
        <div class="alert alert-success" style="margin-bottom: 0px;border-radius: 0px; text-align: center;" role="alert">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-          <strong>{{marketing_message.message|safe}}</strong>
+          <strong>{{marketing_message|safe}}</strong>
       </div>
-    {% endif %} 
+    {% endif %}  -->
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="{% url 'products_home' %}">EasyBuy</a>
@@ -34,4 +33,7 @@
           </ul>
         </div><!--/.nav-collapse -->
       </div>
+
     </nav>
+
+

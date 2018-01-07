@@ -6,15 +6,15 @@ from marketing.models import MarketingMessage
 # Create your views here.
 def home(request):
 	products=Product.objects.all()
-	marketing_message = MarketingMessage.objects.all()[0]
 	context={
 		"products" : products,
-		"marketing_message" : marketing_message ,
+		# "marketing_message" : request.session['marketing_message'],
 	}
 	return render(request,"products/home.html",context)
 
 
 def all(request):
+	del request.session['marketing_message']
 	products=Product.objects.all()
 	context={
 		"products":products
