@@ -50,11 +50,21 @@
    
   </head>
 
-  <body>
+  <body style="padding-top:0px;">
+
+    {% if request.session.marketing_message %}
+       <div class="alert alert-success" style="margin-bottom: 0px;border-radius: 0px; text-align: center;" role="alert">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+          <strong>{{request.session.marketing_message|safe}}</strong>
+      </div>
+    {% endif %} 
 
     {% include "navbar.html" %}
+    
+   <!--  {% if marketing_message %}
+      <div style="margin-top: 30px;"></div>
+    {%endif%} -->
 
-        
 	{% if messages %}
         {% for message in messages %}
              <div class="container alert alert-{% if 'success' in message.tags %}success{% elif 'warning' in message.tags %}warning{% else %}danger{% endif %}  role="alert">
