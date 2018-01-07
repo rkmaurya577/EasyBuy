@@ -28,11 +28,20 @@ ALLOWED_HOSTS = []
 
 DEFAULT_FROM_EMAIL = "yourid@gmail.com"
 
-EMAIL_HOST = "smtp.gmail.com"  #sendgrid  for transactional email
-EMAIL_HOST_USER = "yourid@gmail.com"
-EMAIL_HOST_PASSWORD = "password"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+try:
+    from .email_settings import host,user,password
+    EMAIL_HOST = host #"smtp.gmail.com"  #sendgrid  for transactional email
+    EMAIL_HOST_USER = user #"yourid@gmail.com"
+    EMAIL_HOST_PASSWORD = password #"password"
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+except:
+    pass
+
+if DEBUG:
+    SITE_URL = "http://127.0.0.1:8000"
+if not DEBUG:
+    SITE_URL = "abc.com"
 
 # Application definition
 
@@ -44,10 +53,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
-    'products',
-    'carts',
-    'orders',
     'accounts',
+    'carts',
+    'marketing',
+    'orders',
+    'products',
 
 )
 
