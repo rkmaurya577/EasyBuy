@@ -37,7 +37,9 @@
     </head>
 
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <link href="https://getbootstrap.com/docs/3.3/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -54,7 +56,7 @@
 
     {% if request.session.marketing_message %}
        <div class="alert alert-success" style="margin-bottom: 0px;border-radius: 0px; text-align: center;" role="alert">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+          <a href="#" id="marketing-message-close" class="close" data-dismiss="alert" aria-label="close">x</a>
           <strong>{{request.session.marketing_message|safe}}</strong>
       </div>
     {% endif %} 
@@ -81,16 +83,38 @@
     {% endblock %}
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-    <!-- <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="https://getbootstrap.com/docs/3.3/assets/js/ie10-viewport-bug-workaround.js"></script>
     <!-- for Indian currency -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <script>
+        $(document).ready(function(){
+            console.log("hiii there")
+            $("#marketing-message-close").click(function(){
+                $.ajax({
+                    type : "POST",
+                    url : "{% url 'dismiss_marketing_message' %}",
+                    data : {"dismiss_marketing":true,
+                            "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function(){
+                        console.log("success")
+                    },
+                    error: function(){
+                        console.log("error")
+                    },
 
+                });
+
+            });
+
+        });
+    </script>
 
   
   </body>
