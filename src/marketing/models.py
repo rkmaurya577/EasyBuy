@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 
 # Create your models here.
 class MarketingManagerQuerySet(models.query.QuerySet):
@@ -37,7 +38,6 @@ class MarketingMessage(models.Model):
 	end_date = models.DateTimeField(auto_now_add=False , auto_now=False, null= True,blank=True)
 
 	objects = MarketingMessageManager()
-	messages = MarketingMessageManager()
 
 	class Meta:
 		ordering = ["start_date" , "end_date"]
@@ -45,3 +45,30 @@ class MarketingMessage(models.Model):
 	def __unicode__(self):
 		return str(self.message[:15])
 
+def slider_upload(instance, filename):
+	return "images/marketing/slider/%s" %(filename)
+
+
+class MarketingSlider(models.Model):
+	image = models.ImageField(upload_to=slider_upload)
+	order = models.IntegerField(default=0)
+	url_link = models.CharField(max_length=250, null=True ,blank=True)
+	header_text = models.CharField(max_length=120, null=True,blank=True)
+	text = models.CharField(max_length=120, null=True, blank=True)
+	active = models.BooleanField(default= False)
+	featured = models.BooleanField(default= False)
+	timestamp = models.DateTimeField(auto_now_add=True , auto_now=False)
+	updated = models.DateTimeField(auto_now_add=False , auto_now=True)
+	start_date = models.DateTimeField(auto_now_add=False , auto_now=False, null= True,blank=True)
+	end_date = models.DateTimeField(auto_now_add=False , auto_now=False, null= True,blank=True)
+
+	objects = MarketingMessageManager()
+
+	class Meta:
+		ordering = ["order","start_date" , "end_date"]
+
+	def __unicode__(self):
+		return str(self.image)
+
+	def get_image_url(self):
+		return "%s/%s" %(settings.MEDIA_URL, self.image)
