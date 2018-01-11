@@ -1,20 +1,20 @@
 from django.shortcuts import render,HttpResponse
 from django.db.models import Q
 from .models import Product , ProductImage
-from marketing.models import MarketingMessage
+from marketing.models import MarketingMessage, MarketingSlider
 
 # Create your views here.
 def home(request):
 	products=Product.objects.all()
+	slider = MarketingSlider.objects.featured()
 	context={
 		"products" : products,
-		# "marketing_message" : request.session['marketing_message'],
+		"slider" : slider,
 	}
 	return render(request,"products/home.html",context)
 
 
 def all(request):
-	del request.session['marketing_message']
 	products=Product.objects.all()
 	context={
 		"products":products
