@@ -63,9 +63,7 @@
 
     {% include "navbar.html" %}
     
-   <!--  {% if marketing_message %}
-      <div style="margin-top: 30px;"></div>
-    {%endif%} -->
+    {% include "modal.html" %}
     
     {% include "carousel.html" %}
 
@@ -110,12 +108,17 @@
                     error: function(){
                         console.log("error")
                     },
-
                 });
-
             });
-
+            showModal();
         });
+
+        function showModal(){
+            console.log("showing");
+            $("#myModal").modal("show");
+            // setTimeout(showModal,5000);
+        }
+        
     </script>
 
   
