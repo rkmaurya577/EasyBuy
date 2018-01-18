@@ -33,6 +33,10 @@
             background-position: center;
             margin: 0 auto;
         }
+
+        .send-email{
+            margin-top: 15%;
+        }
     </style>
     </head>
 
@@ -94,7 +98,6 @@
     
     <script>
         $(document).ready(function(){
-            console.log("hiii there")
             $("#marketing-message-close").click(function(){
                 $.ajax({
                     type : "POST",
@@ -110,14 +113,39 @@
                     },
                 });
             });
-            showModal();
-        });
-
-        function showModal(){
-            console.log("showing");
+        {% if not request.user.is_authenticated and not request.session.marketing_email_added and not "accounts" in request.get_full_path %}       
+            
+            function showModal(){
             $("#myModal").modal("show");
-            // setTimeout(showModal,5000);
-        }
+             }
+
+            setTimeout(showModal,5000);
+
+            $("#modalSubmitEmail").click(function(e){
+                e.preventDefault()
+                mForm = $("#modal-email-form").serialize()
+                console.log(mForm)
+                $.ajax({
+                    type : "POST",
+                    url : "{% url 'email_signup' %}",
+                    data : mForm ,
+                    success: function(data){
+                         $("#myModal").modal("hide");
+                    },
+                    error: function(data){
+                        // console.log("error")
+                        var obj = data.responseJSON
+                        // console.log(obj)
+                        // console.log(obj.email)
+                        $("#modalError").html("<p>"+ obj.email +"</p>")
+                    },
+                });
+            });
+        
+        {% endif %}
+    });
+
+        
         
     </script>
 
