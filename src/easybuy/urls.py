@@ -20,10 +20,10 @@ urlpatterns = patterns('',
     url(r'^ajax/dismiss_marketing_message$',"marketing.views.dismiss_marketing_message",name="dismiss_marketing_message"),
     url(r'^ajax/email_signup$',"marketing.views.email_signup",name="email_signup"),
 
-    url(r'^account/logout/$',"accounts.views.logout_view",name="logout"),
-    url(r'^account/login/$',"accounts.views.login_view",name="login"),
-    url(r'^account/register/$',"accounts.views.registration_view",name="registration"),
-    url(r'^account/activate/(?P<activation_key>\w+)/$',"accounts.views.activation_view",name="activation_view"),
+    url(r'^accounts/logout/$',"accounts.views.logout_view",name="logout"),
+    url(r'^accounts/login/$',"accounts.views.login_view",name="login"),
+    url(r'^accounts/register/$',"accounts.views.registration_view",name="registration"),
+    url(r'^accounts/activate/(?P<activation_key>\w+)/$',"accounts.views.activation_view",name="activation_view"),
 )
 
 if settings.DEBUG:
