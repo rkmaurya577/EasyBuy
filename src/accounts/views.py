@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from .forms import LoginForm , RegistrationForm
 from .models import UserEmailConfirmed
+from carts.models import Cart
 
 def logout_view(request):
 	logout(request)
@@ -23,6 +24,12 @@ def login_view(request):
 		user=authenticate(username=username,password=password) #variable = parameter
 		login(request,user)
 		messages.success(request,"Successfully logged in ,Welcome Back")
+		# print "hello"
+		
+		cart = Cart.objects.all()[0]
+		request.session["cart_id"] = cart.id 
+		request.session["total_items"] = cart.cartitem_set.count()
+		# print cart.id
 		return HttpResponseRedirect("/")
 	context={
 		"form" : form,
