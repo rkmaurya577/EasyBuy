@@ -17,8 +17,9 @@ urlpatterns = patterns('',
     url(r'^checkout/$',"orders.views.checkout",name="checkout"),
     url(r'^order/$',"orders.views.order",name="order"),
     
-    url(r'^ajax/dismiss_marketing_message$',"marketing.views.dismiss_marketing_message",name="dismiss_marketing_message"),
-    url(r'^ajax/email_signup$',"marketing.views.email_signup",name="email_signup"),
+    url(r'^ajax/dismiss_marketing_message/$',"marketing.views.dismiss_marketing_message",name="dismiss_marketing_message"),
+    url(r'^ajax/email_signup/$',"marketing.views.email_signup",name="email_signup"),
+    url(r'^ajax/address_form_view/$',"accounts.views.address_form_view",name="address_form_view"),
 
     url(r'^accounts/logout/$',"accounts.views.logout_view",name="logout"),
     url(r'^accounts/login/$',"accounts.views.login_view",name="login"),
