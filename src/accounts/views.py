@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from .forms import LoginForm , RegistrationForm
 from .models import UserEmailConfirmed
 from carts.models import Cart
+from accounts.forms import UserAddressForm
 
 def logout_view(request):
 	logout(request)
@@ -98,4 +99,22 @@ def activation_view(request, activation_key):
 		return render(request,template,context)
 	else:
 		print "http404"
+		raise Http404
+
+
+def address_form_view(request):
+	print request.GET
+	try:
+		redirect = request.GET.get("redirect")
+	except:
+		redirect = None
+	if request.method == "POST":
+		address_form = UserAddressForm(request.POST)
+		if address_form.is_valid():
+			new_address = address_form.save(commit = False)
+			new_address.user = request.user
+			new_address.save()
+		if redirect is not None:
+			return HttpResponseRedirect(reverse(str(redirect)))
+	else:
 		raise Http404
