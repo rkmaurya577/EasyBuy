@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from carts.models import Cart
 from carts.models import Cart
 from accounts.forms import UserAddressForm
+from accounts.models import UserAddress
 
 from .models import Order
 
@@ -36,18 +37,27 @@ def checkout(request):
 		#work on some error  message
 		return HttpResponseRedirect(reverse("view_cart"))
 	#address added
-	address_form = UserAddressForm(request.POST or None)
-	if address_form.is_valid():
-		new_address = address_form.save(commit = False)
-		new_address.user = request.user
-		new_address.save()
+	address_form = UserAddressForm()
+	# if address_form.is_valid():
+	# 	new_address = address_form.save(commit = False)
+	# 	new_address.user = request.user
+	# 	new_address.save()
+	print "hii"
+	current_addresses = UserAddress.objects.filter(user=request.user)
+	billing_addresses = UserAddress.objects.get_billing_addresses(user=request.user)
 
-	#run credit card
+	#1add shipping address
+	#2add billing address
+	#3run credit card
 	if new_order.status == "Finished":
 		del request.session["cart_id"]
 		del request.session["total_items"]
 		return HttpResponseRedirect(reverse("view_cart"))
 
-	context={ "address_form" : address_form }
+	context={ 
+		"address_form" : address_form ,
+		"current_addresses" : current_addresses,
+		"billing_addresses" : billing_addresses,
+	}
 	template="orders/checkout.html"
 	return render(request,template,context)
