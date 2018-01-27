@@ -17,6 +17,18 @@ STATE_CHOICES = (
 	)
 
 
+class UserDefaultAddress(models.Model):
+	user = models.OneToOneField(settings.AUTH_USER_MODEL)
+	shipping = models.ForeignKey("UserAddress", null=True, blank=True, related_name="user_default_shipping_address")
+	billing = models.ForeignKey("UserAddress", null=True, blank=True, related_name="user_default_billing_address")
+
+	def __unicode__(self):
+		return str(self.user.username)
+
+class UserAddressManager(models.Manager):
+	def get_billing_addresses(self,user):
+		return super(UserAddressManager,self).filter(billing=True).filter(user=user)
+
 class UserAddress(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	address = models.CharField(max_length=120)
@@ -31,8 +43,14 @@ class UserAddress(models.Model):
 	timestamp = models.DateTimeField(auto_now_add=True , auto_now=False)
 	updated = models.DateTimeField(auto_now_add=False , auto_now=True)
 
+
+	objects = UserAddressManager()
+
 	def __unicode__(self):
 		return str(self.user.username)
+
+	def get_address(self):
+		return "%s , %s , %s , %s , %s" %(self.address,self.city,self.state,self.zipcode,self.country)
 
 
 class UserStripe(models.Model):
