@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from .forms import LoginForm , RegistrationForm
-from .models import UserEmailConfirmed
+from .models import UserEmailConfirmed, UserDefaultAddress
 from carts.models import Cart
 from accounts.forms import UserAddressForm
 
@@ -114,6 +114,11 @@ def address_form_view(request):
 			new_address = address_form.save(commit = False)
 			new_address.user = request.user
 			new_address.save()
+			is_default = address_form.cleaned_data["default"]
+			if is_default:
+				default_address ,created = UserDefaultAddress.objects.get_or_create(user=request.user)
+				default_address.shipping = new_address
+				default_address.save()
 		if redirect is not None:
 			return HttpResponseRedirect(reverse(str(redirect)))
 	else:
