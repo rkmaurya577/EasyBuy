@@ -6,9 +6,10 @@ User = get_user_model()
 
 
 class UserAddressForm(forms.ModelForm):
+	default = forms.BooleanField(label="Make Default")
 	class Meta:
 		model = UserAddress
-		fields = ["address","address2","city","state","country","zipcode","phone","billing"]
+		fields = ["address","address2","city","state","country","zipcode","phone"]
 
 
 
