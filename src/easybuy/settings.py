@@ -131,7 +131,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
     )
 
-STRIPE_SECRET_KEY = "sk_test_3B4nJzYss9X1KvaYvLeyhf1W"
-STRIPE_PUBLISHABLE_KEY = "pk_test_AvgFANgowGmnKt1e6CSY4IJG"
+STRIPE_SECRET_KEY = "sk_test_F6goU6YxDTM3GpI3lu8VOw4G"
+STRIPE_PUBLISHABLE_KEY = "pk_test_o8uY4aEMQyK2LmX2obSMm4Ew"
 
     
