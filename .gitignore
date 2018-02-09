@@ -1,3 +1,8 @@
+.idea/
+Include/
+Lib/
+Scripts/
+tcl/
 src/easybuy/email_settings.py
 bin/
 easybuy.sublime-*
