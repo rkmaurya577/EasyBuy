@@ -72,8 +72,9 @@ class UserEmailConfirmed(models.Model):
 
 	def activate_user_email(self):
 		#send email here & render a string
-		activation_url = "%s/%s" %(settings.SITE_URL,reverse("activation_view",args=[self.activation_key]))
+		activation_url = "%s%s" %(settings.SITE_URL,reverse("activation_view",args=[self.activation_key]))
 		context = {
+			"username" : self.user,
 			"activation_key" : self.activation_key,
 			"activation_url" : activation_url,
 		}
