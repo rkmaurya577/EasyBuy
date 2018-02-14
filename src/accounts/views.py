@@ -1,4 +1,7 @@
 import re
+
+import time
+
 from django.shortcuts import render,HttpResponseRedirect,Http404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -7,6 +10,7 @@ from .forms import LoginForm , RegistrationForm
 from .models import UserEmailConfirmed, UserDefaultAddress
 from carts.models import Cart
 from accounts.forms import UserAddressForm
+from orders.models import Order
 
 def logout_view(request):
 	logout(request)
@@ -25,12 +29,23 @@ def login_view(request):
 		user=authenticate(username=username,password=password) #variable = parameter
 		login(request,user)
 		messages.success(request,"Successfully logged in ,Welcome Back")
-		# print "hello"
 		
-		cart = Cart.objects.all()[0]
-		request.session["cart_id"] = cart.id 
-		request.session["total_items"] = cart.cartitem_set.count()
-		# print cart.id
+		try:
+			order = Order.objects.get(user=user , status = "Started")
+			cart = order.cart
+			request.session["cart_id"] = cart.id 
+			request.session["total_items"] = cart.cartitem_set.count()
+		except Order.DoesNotExist:
+			new_cart = Cart()
+			new_cart.save()
+			request.session["cart_id"] = new_cart.id
+			new_order = Order()
+			new_order.cart=new_cart
+			new_order.user = request.user
+			new_order.order_id = str(time.time())
+			new_order.save()
+			pass
+
 		return HttpResponseRedirect("/")
 	context={
 		"form" : form,
@@ -44,7 +59,6 @@ def registration_view(request):
 	form = RegistrationForm(request.POST or None)
 	value="Register"
 	if form.is_valid():
-		print "valid"
 		new_user = form.save(commit=False)
 		new_user.save()
 		messages.success(request,"Successfully Registered, Please confirm your email !!")
@@ -67,29 +81,23 @@ SHA1_RE = re.compile("^[a-f0-9]{40}$")
 
 
 def activation_view(request, activation_key):
-	print "in activation_confirmed"
 	if SHA1_RE.search(activation_key):
-		print "real Key"
 		try:
 			instance = UserEmailConfirmed.objects.get(activation_key = activation_key)
-			print "instance exist"
 		except UserEmailConfirmed.DoesNotExist:
 			instance = None
 			messages.success(request,"There was an error with your request.")
 
 		if instance is not None and not instance.confirmed:
-			print "inside if"
 			instance.confirmed=True
 			instance.activation_key="confirmed"
 			instance.save()
 			messages.success(request,"Successfully Registered, Please confirm your email. !!")
 			page_message = "Confirmation Successfull"
 		elif instance is not None and instance.confirmed:
-			print "inside elif"
 			page_message = "Already Confirmed"
 			messages.success(request,"Already Confirmed. !!")
 		else:
-			print "inside else"
 			page_message = ""
 
 		context = {
@@ -98,12 +106,10 @@ def activation_view(request, activation_key):
 		template = "accounts/activation_complete.html"
 		return render(request,template,context)
 	else:
-		print "http404"
 		raise Http404
 
 
 def address_form_view(request):
-	print request.GET
 	try:
 		redirect = request.GET.get("redirect")
 	except:
