@@ -85,7 +85,8 @@
 
 {% block content %}
 
-	<h1>Total = {{order.final_total}}</h1>
+	<h1>Sub_Total = {{order.sub_total}}</h1>
+	<h1>Final_Total = {{order.get_final_total}}</h1>
 	<form method="POST" action="{% url 'address_form_view' %}?redirect=checkout">{% csrf_token %}
 		<div class="col-sm-6 pull-right">
 			<h3>Add new Shipping Address</h3>
