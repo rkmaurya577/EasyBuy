@@ -26,6 +26,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DEFAULT_TAX_RATE = 0.08
+USD_IN_INR = 64.22
+
 DEFAULT_FROM_EMAIL = "yourid@gmail.com"
 
 try:
