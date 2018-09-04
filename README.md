@@ -1,11 +1,11 @@
 
 # Easybuy (A Shopping Website)
   It’s an E-Commerce website including mail confirmation and payment system.
-
-  Front end - Bootstrap , HTML , CSS 
-  Web Framework - Django.
-  Database - Sqlite.
-  Bussiness Logics - Python.
+  
+  1) Front end : Bootstrap,HTML,CSS.
+  2) Web Framework : Django.
+  3) Database : Sqlite.
+  4) Bussiness Logics : Python.
 
   Key Features :-
   - Mail Confirmation.
