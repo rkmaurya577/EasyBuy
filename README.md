@@ -24,9 +24,6 @@
 
 **Note:-** All the modules are dynamic there duration and occurrence can manage from Admin Panel
 
-## Link
-**Please click [here](http://rkmaurya577.pythonanywhere.com/) to visit site.**
-
 # ScreenShots
 
 ### Home
