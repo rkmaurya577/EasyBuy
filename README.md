@@ -1,4 +1,4 @@
-**Disclaimer :** The website is complete concerning **Backend** functionality but the **Frontend** content are just dummy text. So, its just a complete fully functional **template** for **ecommerce** website for **future use**. 
+**Disclaimer :** The website is complete concerning **Backend** functionality but the **Frontend** contents are just dummy text. So, its just a complete fully functional **template** for **ecommerce** website for **future use**. 
 
 # Easybuy (A Shopping Website)
   It’s an E-Commerce website including mail confirmation and payment system.
@@ -23,6 +23,8 @@
 - Login **(Disabled)**
 - Marketting Message
 - Marketting Sliders
+- Mail confirmation **(Disabled)**
+- Payment System **(Disabled)**
 
 **Note:-** All the modules are dynamic there duration and occurrence can manage from Admin Panel
 
