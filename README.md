@@ -1,3 +1,5 @@
+**Disclaimer :** The website is complete concerning **Backend** functionality but the **Frontend** content are just dummy text. So, its just a complete fully functional **template** for **ecommerce** website for **future use**. 
+
 # Easybuy (A Shopping Website)
   It’s an E-Commerce website including mail confirmation and payment system.
   
@@ -17,12 +19,15 @@
 - Cart
 - Product detail
 - Search
-- Checkout
-- Login
+- Checkout **(Disabled)**
+- Login **(Disabled)**
 - Marketting Message
 - Marketting Sliders
 
 **Note:-** All the modules are dynamic there duration and occurrence can manage from Admin Panel
+
+## Link
+**Please click [here](http://rkmaurya577.pythonanywhere.com/) to visit site.**
 
 # ScreenShots
 
